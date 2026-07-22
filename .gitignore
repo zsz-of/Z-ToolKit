@@ -1,0 +1,35 @@
+# ===== 构建产物 =====
+Application/
+Build/venv/
+Build/dist/
+Build/pyinstaller_work/
+.wix/
+
+# ===== 字体库（86 GB，不纳入版本控制） =====
+Fonts/
+
+# ===== 外部工具二进制（安装包已内置，不入库） =====
+Source/Tools/
+Tools/
+
+# ===== 安装包二进制（通过 GitHub Release 发布，不入库） =====
+Installer/*.msi
+Installer/*.exe
+Installer/MSI/*.wixpdb
+Installer/MSI/Z-ToolKit.wxs
+
+# ===== Python 缓存 =====
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ===== 系统文件 =====
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
