@@ -31,7 +31,7 @@ Z-ToolKit 是基于 Python 3.13 + tkinter/ttk 构建的桌面工具集，采用�
 - 主程序入口：`Z-ToolKit.py`
 - 业务模块目录：`Add/`（每个模块一个中文命名的文件夹）
 - 公共组件包：`Add/common/`（TabModule 基类、文件选择器、编码选项面板等）
-- 外部工具目录：`Tools/`（ffmpeg、mkvmerge 等，不入库，安装包已内置）
+- 外部工具目录：`Tools/`（ffmpeg、mkvmerge 等，不入库，见 .gitignore）
 
 ## 二、功能特性
 
@@ -54,7 +54,7 @@ Z-ToolKit 是基于 Python 3.13 + tkinter/ttk 构建的桌面工具集，采用�
 ## 三、目录结构
 
 ```
-Z-ToolKit/                         ← 仓库根目录（即 Source/）
+Z-ToolKit/                         ← 仓库根目录
 ├── README.md                      ← 本文档
 ├── Z-ToolKit.py                   ← 主程序入口（加载模块、管理工具、配置持久化）
 ├── Add/                           ← 业务模块目录
@@ -86,14 +86,10 @@ Z-ToolKit/                         ← 仓库根目录（即 Source/）
 git clone https://github.com/zsz-of/Z-ToolKit.git
 cd Z-ToolKit
 
-:: 2. 创建虚拟环境
-python -m venv Build\venv
-Build\venv\Scripts\activate
+:: 2. 安装 Python 依赖
+pip install requests chardet tkinterdnd2 fontTools send2trash
 
-:: 3. 安装 Python 依赖
-pip install requests chardet tkinterdnd2 fontTools send2trash pyinstaller
-
-:: 4. 准备外部工具（下载地址见下方"开源引用"章节）
+:: 3. 准备外部工具（下载地址见下方"开源引用"章节）
 ::    将工具放入 Tools\ 目录，结构如下：
 ::    Tools\7z\7z.exe
 ::    Tools\ffmpeg\ffmpeg.exe
@@ -102,19 +98,19 @@ pip install requests chardet tkinterdnd2 fontTools send2trash pyinstaller
 ::    Tools\mkvmerge\mkvmerge.exe
 ::    Tools\hb-subset\hb-subset.exe
 
-:: 5. 脚本模式运行（开发调试）
+:: 4. 运行
 python Z-ToolKit.py
 ```
 
 #### 国内镜像加速
 
 ```bat
-pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests chardet tkinterdnd2 fontTools send2trash pyinstaller
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple requests chardet tkinterdnd2 fontTools send2trash
 ```
 
 #### 开发模式热更新
 
-脚本模式下修改 `Add/` 中的模块代码后，重启程序即可生效，无需重新构建 EXE。
+脚本模式下修改 `Add/` 中的模块代码后，重启程序即可生效。
 
 ## 四、运行方式
 
@@ -129,7 +125,7 @@ python Z-ToolKit.py
 ### 依赖
 
 ```bat
-pip install requests chardet tkinterdnd2 fontTools send2trash pyinstaller
+pip install requests chardet tkinterdnd2 fontTools send2trash
 ```
 
 ## 五、配置位置
@@ -141,48 +137,7 @@ pip install requests chardet tkinterdnd2 fontTools send2trash pyinstaller
 
 > 程序退出时自动保存配置；配置文件读取失败不报错，静默使用默认值。
 
-## 六、封装与安装包制作
-
-> 以下为封装参考文档。本仓库仅含源代码，`Application/`（PyInstaller 产物）和 `Installer/`（安装包脚本与产物）不在仓库中，需按以下步骤自行创建。
-
-### 6.1 PyInstaller 打包 exe（隐藏控制台）
-
-使用 **PyInstaller** 将 Python 打包为 exe，输出到工作目录的 `Application/` 文件夹。
-
-```bat
-pyinstaller --onedir --windowed --name Z-ToolKit ^
-  --collect-all tkinterdnd2 --collect-all fontTools --collect-all send2trash ^
-  --collect-all requests --collect-all chardet --collect-all sqlite3 ^
-  --hidden-import tkinter.colorchooser ^
-  --hidden-import tkinter.scrolledtext --hidden-import tkinter.filedialog ^
-  --hidden-import tkinter.messagebox --hidden-import tkinter.font ^
-  --hidden-import uuid --hidden-import hashlib --hidden-import difflib ^
-  --hidden-import unicodedata --hidden-import struct ^
-  --hidden-import concurrent.futures --hidden-import logging ^
-  --hidden-import string --hidden-import pathlib ^
-  --hidden-import enum --hidden-import shutil --hidden-import stat ^
-  --hidden-import random ^
-  Z-ToolKit.py
-```
-
-- `--onedir --windowed`：目录模式，隐藏控制台窗口。
-- `--collect-all <包名>`：完整收集第三方库（含原生 DLL）。
-- `--hidden-import <模块名>`：显式声明动态加载模块中的 stdlib 导入（PyInstaller 静态分析无法检测 `importlib.import_module` 内的导入）。
-- 产物：`dist/Z-ToolKit/`，内容复制到 `Application/` 即为完整运行环境。
-- 封装后将 `Add/` 和 `Tools/` 放在 EXE 同级目录。
-
-### 6.2 MSI 安装包（WiX Toolset）
-
-脚本存放在 `Installer/MSI/`，最终产物 `Z-ToolKit_Installer.msi` 移动到 `Installer/` 根目录。
-
-- 6 个外部工具子目录作为可选组件（用户可选择性安装）。
-- 静默安装运行时依赖，不重启系统。
-
-### 6.3 Inno Setup 安装包（EXE）
-
-脚本存放在 `Installer/Inno_Setup/`，最终产物 `Z-ToolKit_Installer.exe` 移动到 `Installer/` 根目录。
-
-## 七、开源引用（致谢）
+## 六、开源引用（致谢）
 
 | 项目 | 用途 | 仓库 |
 |------|------|------|
@@ -195,6 +150,3 @@ pyinstaller --onedir --windowed --name Z-ToolKit ^
 | tkinterdnd2 | Tkinter 拖放支持 | <https://github.com/pmgagnon/tkinterdnd2> |
 | fonttools | 字体处理（子集化） | <https://github.com/fonttools/fonttools> |
 | Send2Trash | 回收站删除（子集化） | <https://github.com/arsenetar/send2trash> |
-| PyInstaller | Python 打包工具 | <https://github.com/pyinstaller/pyinstaller> |
-| WiX Toolset | MSI 安装包制作 | <https://github.com/wixtoolset/wix> |
-| Inno Setup | EXE 安装包制作 | <https://github.com/jrsoftware/issrc> |
