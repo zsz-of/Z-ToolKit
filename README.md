@@ -2,7 +2,7 @@
 
 > 视频/字幕/文件处理工具集 — 13 个功能模块的桌面工具箱，涵盖符号链接、动漫分类、视频编码、字幕处理等常见场景。
 
-由 **zsz** 与 **Kimi-K3** 一起创建。
+由 **zsz** 创建。
 
 当前版本：**1.0.0**
 
@@ -10,7 +10,7 @@
 
 本程序基于 **GNU General Public License v3.0 (GPLv3)** 开源协议发布。
 
-Copyright (C) 2026 zsz & Kimi-K3
+Copyright (C) 2026 zsz
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
